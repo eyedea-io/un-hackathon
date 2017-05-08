@@ -1,0 +1,5 @@
+hosting:
+  staging:
+    src: ../.zefir
+  production:
+    src: ../.zefir
