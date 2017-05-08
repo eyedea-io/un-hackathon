@@ -1,0 +1,19 @@
+{
+  "name": "un-hackathon",
+  "version": "1.0.0",
+  "private": true,
+  "repository": "https://github.com/eyedea-io/un-hackathon.git",
+  "license": "MIT",
+  "scripts": {
+    "dev": "zefir dev",
+    "build": "zefir build",
+    "start": "zefir start"
+  },
+  "dependencies": {
+    "mobx": "3.1.9",
+    "mobx-react": "4.1.8",
+    "react": "15.5.4",
+    "react-dom": "15.5.4",
+    "zefir": "beta"
+  }
+}
