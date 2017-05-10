@@ -7,7 +7,7 @@ module.exports = {
         r.options.sourceMaps = 'both'
       }
     }
-    
+
     config.output.filename = '[hash].[name]'
 
     return config

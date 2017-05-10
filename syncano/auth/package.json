@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "axios": "^0.16.1",
+    "syncano-server": "^0.8.1"
+  }
+}

@@ -1,24 +1,18 @@
-export default ({
-  stores: {app: {fullName}},
-  services: {app: {toggleName}}
-}) => (
-  <div className='page'>
-    Hey: <b>{fullName}</b>
-    <button onClick={toggleName}>Log</button>
+import {Match, MatchAsGuest} from './components/router'
+import LandingView from './views/landing'
+import AuthView from './views/auth'
 
-    <style jsx>{`
-      .page {
-        padding: 80px;
-        font-family: Arial;
-      }
-
-      button {
-        padding: 7px 14px;
-        background: #0366d6;
-        border-radius: 3px;
-        border: none;
-        color: #fff;
-      }
-    `}</style>
+const App = () => (
+  <div>
+    <Match path='/' exact component={LandingView} />
+    <MatchAsGuest path='/auth' component={AuthView} redirect={'/'} />
   </div>
 )
+
+App.init = ({
+  services: {auth}
+}) => {
+  auth.rebuildSession()
+}
+
+export default App
