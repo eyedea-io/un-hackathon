@@ -1,9 +1,10 @@
-const Grid = ({children, wrap, split, center, smallGutter, className=''}) => (
+const Grid = ({children, wrap, split, center, middle, smallGutter, className=''}) => (
   <div className={`
     Grid
     ${wrap ? 'Grid--wrap' : ''}
     ${split ? 'Grid--split' : ''}
     ${center ? 'Grid--center' : ''}
+    ${middle ? 'Grid--middle' : ''}
     ${smallGutter ? 'Grid--smallGutter' : ''}
     ${className}
   `}>
@@ -25,6 +26,10 @@ const Grid = ({children, wrap, split, center, smallGutter, className=''}) => (
 
       .Grid--center {
         justify-content: center;
+      }
+
+      .Grid--middle {
+        align-items: center;
       }
 
       .Grid > :global(*) {

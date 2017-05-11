@@ -31,6 +31,32 @@ export default class User {
     return await this.services.syncano.post('registry/add-entry', {type, data})
   }
 
+  @action.bound async fetchEntryToSign (datakey) {
+    const {syncano} = this.services
+    const {pending} = this.stores
+
+    pending.set('user.get-entry-to-sign')
+
+    this.store.entryToSign = await this.services.syncano.get('registry/get-entry-to-sign', {datakey})
+
+    runInAction('delete user.get-entry-to-sign pending status', () => {
+      pending.delete('user.get-entry-to-sign')
+    })
+  }
+
+  @action.bound async signEntry (datakey) {
+    const {syncano} = this.services
+    const {pending} = this.stores
+
+    pending.set('user.sign-entry')
+
+    await this.services.syncano.get('registry/sign', {datakey})
+
+    runInAction('delete user.sign-entry pending status', () => {
+      pending.delete('user.sign-entry')
+    })
+  }
+
   // @action.bound async update (data) {
   //   const {syncano} = this.services
   //   const {messages, pending} = this.stores

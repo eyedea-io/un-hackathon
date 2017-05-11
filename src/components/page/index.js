@@ -74,6 +74,13 @@ const Page = ({children}) => (
       .u-mb-  { margin-bottom: 16px }
       .u-mb-- { margin-bottom: 8px  }
 
+      .u-ml\\+\\+\\+ { margin-left: 64px }
+      .u-ml\\+\\+  { margin-left: 48px }
+      .u-ml\\+  { margin-left: 40px }
+      .u-ml   { margin-left: 32px }
+      .u-ml-  { margin-left: 16px }
+      .u-ml-- { margin-left: 8px  }
+
       .u-ta-l { text-align: left;}
       .u-ta-c { text-align: center;}
       .u-ta-r { text-align: right;}

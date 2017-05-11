@@ -1,8 +1,13 @@
 import {connect} from 'zefir/utils'
 import Button from '../../../components/button'
 import Link from '../../../components/link'
+import Avatar from '../../../components/avatar'
+import Modal from '../../../components/modal'
+import Input from '../../../components/input'
+import Grid from '../../../components/grid'
+import {formatDate} from '../../../helpers'
 
-const ProfileSummary = ({store, pending}) => (
+const ProfileSummary = ({store, pending, toggleShareIdentityModal}) => (
   <div>
     {pending.has('user.get-summary') ? (
       <div></div>
@@ -11,7 +16,7 @@ const ProfileSummary = ({store, pending}) => (
       <div className='Profile u-mt+++'>
         <div className='Profile__header'>
           <div className='Profile__avatar'>
-            <img src={`http://eightbitavatar.herokuapp.com/?id=${encodeURIComponent(store.profile.fullname)}&s=male&size=64`} />
+            <img src={`http://eightbitavatar.herokuapp.com/?id=${encodeURIComponent(store.profile.username)}&s=male&size=64`} />
           </div>
           <div className='Profile__fullname'>{store.profile.fullname}</div>
         </div>
@@ -19,6 +24,7 @@ const ProfileSummary = ({store, pending}) => (
         <h2 className='Profile__heading u-mt+++'>
           Personal information &mdash; <Link to='/profile/edit'>Edit</Link>
         </h2>
+
         <div className='InfoList u-mt'>
           <div className='InfoList__item'>
             <div className='InfoList__item-key'>Blockchain address</div>
@@ -30,10 +36,48 @@ const ProfileSummary = ({store, pending}) => (
           </div>
           <div className='InfoList__item'>
             <div className='InfoList__item-key'>Birth date</div>
-            <div className='InfoList__item-value'>{
-              new Date(store.profile.birth_date).toISOString().slice(0, 10)
-            }</div>
+            <div className='InfoList__item-value'>{formatDate(store.profile.birth_date)}</div>
           </div>
+
+          <Grid split className='u-mt'>
+            {(store.profile.signed_by || []).length ? (
+              <Grid smallGutter middle>
+                <div>
+                  <img className='Profile__status' src="https://maxcdn.icons8.com/office/PNG/30/Very_Basic/ok-30.png" title="Ok" width="30" height="30" />
+                </div>
+                <div>Confirmed by:</div>
+              </Grid>
+            ) : (
+              <Grid smallGutter middle>
+                <div>
+                  <img className='Profile__status' src="https://maxcdn.icons8.com/office/PNG/30/User_Interface/error-30.png" title="Error" width="30" height="30" />
+                </div>
+                <div>Not confirmed</div>
+              </Grid>
+            )}
+
+            {(store.profile.signed_by || []).length ? (
+              <div>
+                <a onClick={toggleShareIdentityModal}>Share Identity</a>
+              </div>
+            )
+            : (
+              <div>
+                <a onClick={toggleShareIdentityModal}>Ask for confirmation</a>
+              </div>
+            )}
+          </Grid>
+
+          {(store.profile.signed_by || []).length ? (
+            <div className='u-ml+ u-mt--'>
+              <Grid smallGutter>
+                {store.profile.signed_by.map(item => (
+                  <Avatar username={item.username} size={32} title={item.username} />
+                ))}
+              </Grid>
+            </div>
+          )
+          : ''}
         </div>
 
         <h2 className='Profile__heading u-mt+++'>
@@ -42,11 +86,10 @@ const ProfileSummary = ({store, pending}) => (
         <div className='InfoList u-mt'>
           <div className='InfoList__empty'>
             <h3>No documents</h3>
-            {/* <a href=''>Upload your first document</a> */}
           </div>
           {/* <div className='InfoList__item'>
             <div className='InfoList__item-icon InfoList__item-icon--pdf'>
-              <img src="https://maxcdn.icons8.com/ultraviolet/PpNG/40/Files/pdf-40.png" title="PDF" width="40" height="40" />
+              <img src="https://maxcdn.icons8.com/ultraviolet/PNG/40/Files/pdf-40.png" title="PDF" width="40" height="40" />
             </div>
             <div className='InfoList__item-value'>English certificate</div>
             <div className='InfoList__item-link'>
@@ -68,6 +111,13 @@ const ProfileSummary = ({store, pending}) => (
           </div> */}
         </div>
 
+        <h2 className='Profile__heading u-mt+++'>Immigration details</h2>
+        <div className='InfoList u-mt'>
+          <div className='InfoList__empty'>
+            <h3>No details yet</h3>
+          </div>
+        </div>
+
         {/* <h2 className='u-mt+++'>Emigration details</h2>
         <div>...</div> */}
 
@@ -80,18 +130,36 @@ const ProfileSummary = ({store, pending}) => (
           <div>Father's name</div>
           <div>Mother's name</div>
           <div>Address</div> */}
-
-        <div className='u-mt+++ u-ta-c'>
-          <Button primary>Share Identity</Button>
-        </div>
       </div>
     )}
+
+    <Modal title='Share your identity' subtitle='Lorem ipsum dolor sit amet, consectetur adipisicing elit.' name='share-identity' size='small'>
+      <div className='u-ta-c'>
+        <img src={`https://${process.env.SYNCANO_INSTANCE_NAME}.syncano.space/registry/get-entry-svg/?datakey=${store.profile.datakey}`} alt='' />
+      </div>
+
+      <div className='u-ta-c'>or share a link</div>
+
+      <div className='u-mt'>
+        <Input
+          full
+          readOnly
+          onClick={e => e.target.select()}
+          type='text'
+          value={`${window.location.origin}/#/sign-entry?datakey=${store.profile.datakey}`}
+          />
+      </div>
+    </Modal>
 
     <style jsx>{`
       .Profile {
         max-width: 700px;
         margin-left: auto;
         margin-right: auto;
+      }
+
+      .Profile__status {
+        display: block;
       }
 
       .Profile__heading :global(a) {
@@ -172,9 +240,14 @@ const ProfileSummary = ({store, pending}) => (
 )
 
 ProfileSummary.init = ({
+  services: {ui},
   stores: {user: store, pending}
 }) => {
-  return {store, pending}
+  return {
+    store,
+    pending,
+    toggleShareIdentityModal: () => ui.toggleModal('share-identity')
+  }
 }
 
 export default connect(ProfileSummary)
