@@ -35,6 +35,7 @@ Login.init = ({
 
 Login.form = {
   formName: 'LoginForm',
+  permament: false,
   fields: {
     username: {
       autoFocus: true,

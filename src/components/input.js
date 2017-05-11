@@ -6,7 +6,7 @@ const Input = ({full, type = 'text', ...props}) => (
       ${full ? 'Input--full' : ''}
     `}>
     <label>
-      <input {...props} type={type} />
+      <input {...props} type={type} autoComplete={false} />
       <span />
       {props.label}
     </label>
