@@ -37,7 +37,7 @@ data.registry
       )
     }
     if (dataToSign.type === 'basic-data') {
-      response.json(sumamry)
+      response.json(summary)
     } else {
       response.json(
         Object.assign(
