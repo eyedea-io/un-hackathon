@@ -38,6 +38,8 @@ const Landing = ({logout}) => (
     <style jsx>{`
       .Main {
         max-width: 400px;
+        margin-left: auto;
+        margin-right: auto;
         text-align: center;
       }
 

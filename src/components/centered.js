@@ -7,12 +7,15 @@ export default ({children}) => (
     </div>
 
     <style jsx>{`
-      .Centered > div {
+      .Centered {
         text-align: center;
         min-height: calc(100vh - 32px - 64px);
         display: flex;
         align-items: center;
-        justify-content: center;
+      }
+
+      .Centered > div {
+        flex-grow: 1;
       }
     `}</style>
   </div>

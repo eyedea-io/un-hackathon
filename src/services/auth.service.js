@@ -1,13 +1,9 @@
 import {action, runInAction} from 'mobx'
 
 export default class {
-  @action.bound rebuildSession () {
+  @action.bound async rebuildSession () {
     this.store.token = window.localStorage.getItem('token')
     this.services.syncano.setToken(this.store.token)
-
-    if (this.store.token) {
-      // this.stores.user.profile = this.services.user.fetch()
-    }
   }
 
   @action.bound async login (credentials) {
@@ -59,13 +55,12 @@ export default class {
     this.services.syncano.setToken(null)
     this.router.history.push('/')
     window.localStorage.removeItem('token')
-    this.stores.user.profile = null
+    this.stores.user.profile = {}
   }
 
   @action.bound async handleValidAuth (token) {
     this.store.token = token
     this.services.syncano.setToken(token)
     window.localStorage.setItem('token', token)
-    // this.stores.user.profile = await this.services.user.fetch()
   }
 }

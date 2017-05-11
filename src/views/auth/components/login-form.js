@@ -13,7 +13,7 @@ const Login = ({fields, messages, pending, login}) => (
     <InputList errors={messages.get('auth.login')}>
       <Input {...fields.username} full disabled={pending.has('auth.login')} />
       <Input {...fields.password} full disabled={pending.has('auth.login')} />
-      <Button primary full>Sign in</Button>
+      <Button primary full disabled={pending.has('auth.login')}>Sign in</Button>
     </InputList>
 
     <div className='u-mt- u-ta-l'>

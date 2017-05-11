@@ -1,5 +1,9 @@
-import {observable} from 'mobx'
+import {computed, observable} from 'mobx'
 
-export default {
-  @observable profile: null
-}
+export default observable({
+  profile: {},
+  timeline: [],
+  get hasBasicData () {
+    return this.profile.fullname
+  }
+})

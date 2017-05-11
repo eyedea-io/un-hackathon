@@ -21,7 +21,7 @@ export default ({children}) => (
       }
 
       .Menu__item + * {
-        border-top: solid 1px #e5e5e5;
+        border-top: solid 1px #E5E9F0;
       }
 
       .Menu :global(a) {

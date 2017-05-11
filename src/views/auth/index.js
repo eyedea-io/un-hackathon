@@ -37,7 +37,8 @@ const AuthView = () => (
     <style jsx>{`
       .Form {
         max-width: 400px;
-        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
       }
 
       .Form__input {

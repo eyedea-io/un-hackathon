@@ -1,14 +1,10 @@
 import Wrapper from './wrapper'
 
-const Preload = ({loading, children}) => (
-  <div>
-    {loading ? (
-      <Wrapper className='u-mt'>
-        Loading
-      </Wrapper>
-    )
-    : children}
-  </div>
+const Preload = ({loading, children}) => loading ? (
+  <Wrapper className='u-mt'>
+    Loading...
+  </Wrapper>
 )
+: children
 
 export default Preload

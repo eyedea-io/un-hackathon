@@ -41,9 +41,9 @@ function createUser () {
 }
 
 function respondWithAlreadyExists () {
-  response.json({data: {username: "User already exists."}}, 400)
+  response.json({data: {username: 'User already exists.'}}, 400)
 }
 
 function respondWithInvalidEmail() {
-  response.json({data: {username: "Given email is invalid."}}, 400)
+  response.json({data: {username: 'Given email is invalid.'}}, 400)
 }
