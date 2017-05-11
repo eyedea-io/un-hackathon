@@ -35,10 +35,9 @@ data.registry
         { 'block_address': basicData.user.blockaddress },
         { 'datakey': basicData.datakey }
       )
-    },
+    }
     if (dataToSign.type === 'basic-data') {
       response.json(sumamry)
-      )
     } else {
       response.json(
         Object.assign(
