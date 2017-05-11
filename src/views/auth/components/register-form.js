@@ -13,7 +13,7 @@ const RegisterForm = ({fields, messages, pending, register}) => (
     <InputList errors={messages.get('auth.register')}>
       <Input {...fields.username} full disabled={pending.has('auth.register')} />
       <Input {...fields.password} full disabled={pending.has('auth.register')} />
-      <Button primary full>Sign up</Button>
+      <Button primary full disabled={pending.has('auth.register')}>Sign up</Button>
     </InputList>
 
     <div className='u-mt- u-ta-l'>

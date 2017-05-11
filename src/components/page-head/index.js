@@ -1,6 +1,7 @@
 import {connect} from 'zefir/utils'
 import Link from '../link'
 import Wrapper from '../wrapper'
+import SecondaryNav from './secondary-nav'
 
 const PageHead = () => (
   <Wrapper>
@@ -8,6 +9,7 @@ const PageHead = () => (
       <Link to='/'>
         <span className='PageHead__title'>Noora's Identity</span>
       </Link>
+      <SecondaryNav />
 
       <style jsx>{`
         .PageHead {

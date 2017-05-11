@@ -30,5 +30,5 @@ function authorizeUser() {
 }
 
 function respondWithInvalidCredentials() {
-  response.json({data: {detail: "Given credentials are invalid."}}, 400)
+  response.json({data: {detail: 'Given credentials are invalid.'}}, 400)
 }

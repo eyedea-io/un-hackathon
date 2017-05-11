@@ -1,10 +1,10 @@
 import Normalize from './styles/normalize'
-import DevTools from 'mobx-react-devtools'
+// import DevTools from 'mobx-react-devtools'
 
 const Page = ({children}) => (
   <div className='Page'>
     <Normalize />
-    <DevTools />
+    {/* <DevTools /> */}
 
     {children}
 
@@ -19,6 +19,7 @@ const Page = ({children}) => (
       html {
         font-family: "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
         color: #6b6c6f;
+        overflow-y: scroll;
       }
 
       a {
@@ -54,6 +55,11 @@ const Page = ({children}) => (
         line-height: 1.25;
       }
 
+      .u-rule {
+        border: 0;
+        border-top: 1px solid #E5E9F0;
+      }
+
       .u-mt\\+\\+\\+ { margin-top: 64px }
       .u-mt\\+\\+  { margin-top: 48px }
       .u-mt\\+  { margin-top: 40px }
@@ -71,6 +77,13 @@ const Page = ({children}) => (
       .u-ta-l { text-align: left;}
       .u-ta-c { text-align: center;}
       .u-ta-r { text-align: right;}
+
+
+      @keyframes pulse {
+        0% { width: .7em; height: .7em; margin: .4em;  }
+        50% { width: 1.1em; height: 1.1em; margin: .2em; }
+        100% { width: .9em; height: .9em; margin: .3em; }
+      }
     `}</style>
   </div>
 )
