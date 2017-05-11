@@ -1,0 +1,183 @@
+name: registry
+description: Description of registry
+version: 0.0.1
+
+classes:
+  user:
+    - name: blockaddress
+      type: string
+      filter_index: true
+    - name: enckey
+      type: string
+  registry:
+    - name: type
+      type: string
+      filter_index: true
+      order_index: true
+    - name: data
+      type: object
+    - name: datakey
+      type: string
+      filter_index: true
+    - name: user
+      type: reference
+      target: user
+      filter_index: true
+    - name: signed_by
+      type: relation
+      target: user
+
+endpoints:
+  add-entry:
+    description: Adding registry entry
+    file: scripts/add-entry.js
+    parameters:
+      type:
+        type: string
+        description: Type of the entry
+        example: 'basic-data'
+      data:
+        type: object
+        description: Entry data
+        example: |
+          {
+            "firstname": "Tyler",
+            "lastname": "Durden"
+          }
+    response:
+      mimetype: application/json
+      examples:
+        -
+          exit_code: 200
+          description: Success
+          example: |
+            {}
+        -
+          exit_code: 400
+          description: Failed
+          example: |
+            {
+              "message": "Error!"
+            }
+
+  get-summary:
+    description: Get user summary
+    file: scripts/get-summary.js
+    response:
+      mimetype: application/json
+      examples:
+        -
+          exit_code: 200
+          description: Success
+          example: |
+            {
+              "firstname": "Tyler",
+              "lastname": "Durden"
+            }
+        -
+          exit_code: 400
+          description: Failed
+          example: |
+            {
+              "message": "Error!"
+            }
+
+  get-timeline:
+    description: Get user summary
+    file: scripts/get-timeline.js
+    response:
+      mimetype: application/json
+      examples:
+        -
+          exit_code: 200
+          description: Success
+          example: |
+            {
+              "type": "basic-data",
+              "data": [
+                {
+                  "firstname": "Tyler",
+                  "lastname": "Durden",
+                  "created_at": "2017-02-01",
+                  "signed_by": [
+                    { "name" : "Red Cross" }
+                  ]
+                },
+                {
+                  "firstname": "Tyler",
+                  "lastname": "Durden",
+                  "created_at": "2017-02-05",
+                  "signed_by": [
+                    { "name" : "UDI" }
+                  ]
+                }
+              ]
+            }
+        -
+          exit_code: 400
+          description: Failed
+          example: |
+            {
+              "message": "Error!"
+            }
+
+  get-entry-svg:
+    description: Get svg for the entry
+    file: scripts/get-entry-svg.js
+    response:
+      mimetype: image/svg+xml
+      examples:
+        -
+          exit_code: 200
+          description: Success
+        -
+          exit_code: 400
+          description: Failed
+          example: |
+            {
+              "message": "Error!"
+            }
+
+  sign:
+    description: Sign piece of data
+    file: scripts/sign.js
+    parameters:
+      datakey:
+        type: string
+        description: Data key
+        example: '13512421y412y4o12ih21ley7912'
+    response:
+      mimetype: application/json
+      examples:
+        -
+          exit_code: 200
+          description: Success
+        -
+          exit_code: 400
+          description: Failed
+          example: |
+            {
+              "message": "Error!"
+            }
+
+  get-entry-to-sign:
+    description: Get data to sign
+    file: scripts/get-entry-to-sign.js
+    parameters:
+      datakey:
+        type: string
+        description: Data key
+        example: '13512421y412y4o12ih21ley7912'
+    response:
+      mimetype: application/json
+      examples:
+        -
+          exit_code: 200
+          description: Success
+        -
+          exit_code: 400
+          description: Failed
+          example: |
+            {
+              "message": "Error!"
+            }
