@@ -18,10 +18,14 @@ classes:
       type: object
     - name: datakey
       type: string
+      filter_index: true
     - name: user
       type: reference
       target: user
       filter_index: true
+    - name: signed_by
+      type: relation
+      target: user
 
 endpoints:
   add-entry:
@@ -122,6 +126,50 @@ endpoints:
     file: scripts/get-entry-svg.js
     response:
       mimetype: image/svg+xml
+      examples:
+        -
+          exit_code: 200
+          description: Success
+        -
+          exit_code: 400
+          description: Failed
+          example: |
+            {
+              "message": "Error!"
+            }
+
+  sign:
+    description: Sign piece of data
+    file: scripts/sign.js
+    parameters:
+      datakey:
+        type: string
+        description: Data key
+        example: '13512421y412y4o12ih21ley7912'
+    response:
+      mimetype: application/json
+      examples:
+        -
+          exit_code: 200
+          description: Success
+        -
+          exit_code: 400
+          description: Failed
+          example: |
+            {
+              "message": "Error!"
+            }
+
+  get-entry-to-sign:
+    description: Get data to sign
+    file: scripts/get-entry-to-sign.js
+    parameters:
+      datakey:
+        type: string
+        description: Data key
+        example: '13512421y412y4o12ih21ley7912'
+    response:
+      mimetype: application/json
       examples:
         -
           exit_code: 200
