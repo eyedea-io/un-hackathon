@@ -9,6 +9,7 @@ console.log(META)
 data.registry
   .where('user', META.user.id)
   .with('user')
+  .with('signed_by')
   .where('type', 'basic-data')
   .orderBy('created_at', 'DESC')
   .first()
@@ -18,8 +19,10 @@ data.registry
     response.json(
       Object.assign(
         data.data,
+        { 'username': data.user.username },
         { 'block_address': data.user.blockaddress },
-        { 'datakey': data.datakey }
+        { 'datakey': data.datakey },
+        { 'signed_by': data.signed_by }
       )
     )
   })

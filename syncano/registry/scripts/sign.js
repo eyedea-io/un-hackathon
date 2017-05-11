@@ -1,7 +1,7 @@
 import QRCode from 'qrcode-svg';
 import { response, logger, data } from 'syncano-server'
 
-const { debug } = logger('get-entry-svg');
+const { debug } = logger('sign');
 
 console.log(ARGS)
 console.log(META)
@@ -12,23 +12,24 @@ data.registry
   .where('datakey', ARGS.datakey)
   .with('user')
   .first()
-  .then(data => {
-    if (!data) {
+  .then(respData => {
+    if (!respData) {
       response('No such entry', 400, 'text/plain')
       process.exit()
     } else {
-      debug(JSON.stringify(data))
-      dataToSign = data
-      const signatures = data.signed_by
+      debug(JSON.stringify(respData))
+      dataToSign = respData
+      const signatures = respData.signed_by || []
       signatures.push(META.user.id)
-      return data.registry.update(data.id, { signed_by: signatures })
+      return data.registry.update(respData.id, { signed_by: signatures })
     }
   })
   .then(resp => {
     debug(resp)
-    response('', 200)
+    response.json({}, 200)
   })
   .catch(err => {
+    console.log(err)
     err.response.json()
       .then(resp => {
         console.log(resp)

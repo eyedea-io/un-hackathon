@@ -29,9 +29,12 @@ data.registry
   })
   .then(basicData => {
     debug(JSON.stringify(basicData))
+    const signedBy = dataToSign.signed_by || []
     const summary = {
+      'signed_by_me': signedBy.indexOf(META.user.id) > 0 ? true : false,
       'summary' : Object.assign(
         basicData.data,
+        { 'username': dataToSign.user.username },
         { 'block_address': basicData.user.blockaddress },
         { 'datakey': basicData.datakey }
       )
