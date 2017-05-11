@@ -31,6 +31,7 @@ deployment:
     commands:
       - syncano-cli deploy
       - syncano-cli hosting sync staging
+      - syncano-cli hosting config staging --cname grabbag.bio
 
 experimental:
   notify:
